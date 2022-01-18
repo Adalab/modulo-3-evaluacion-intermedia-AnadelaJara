@@ -1,7 +1,14 @@
 import '../styles/App.css';
-import adalabersList from '../data/adalabers.js'
+import adalabersList from '../data/adalabers.json'
 
 function App() {
+  const htmlList = adalabersList.map((adalaber) => (<tr key={adalaber.id}>
+    <td>{adalaber.name}</td>
+    <td>{adalaber.counselor}</td>
+    <td>{adalaber.speciality}</td>
+  </tr>
+  ));
+
   return (
     <div>
       <header >
@@ -17,11 +24,7 @@ function App() {
           </tr></thead>
           <tbody>
             {/* <!-- Primera fila --> */}
-            <tr>
-              <td>Columa 1 de la fila 1</td>
-              <td>Columa 2 de la fila 1</td>
-              <td>Columa 3 de la fila 1</td>
-            </tr>
+            {htmlList}
           </tbody>
         </table>
         <form>
@@ -48,7 +51,7 @@ function App() {
           />
         </form>
       </main>
-    </div>
+    </div >
   );
 }
 
