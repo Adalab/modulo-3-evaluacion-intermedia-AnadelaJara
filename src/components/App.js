@@ -10,6 +10,8 @@ function App() {
 
   const [data, setData] = useState([]);
 
+  const [search, setSearch] = useState('');
+
   useEffect(() => {
     fetch('https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json')
       .then(response => response.json())
@@ -17,6 +19,10 @@ function App() {
         setData(responseData.results);
       });
   }, []);
+
+  const handleChangeSearch = (ev) => {
+    setSearch(ev.currentTarget.value)
+  }
 
   const handleChangeName = (ev) => {
     setName(ev.currentTarget.value);
@@ -42,7 +48,10 @@ function App() {
     setSpeciality('');
   }
 
-  const htmlList = data.map((adalaber) => (<tr key={adalaber.id}>
+  const filterData = data.filter((oneAdalaber) => oneAdalaber.name.toLowerCase().includes(search.toLowerCase()));
+
+
+  const htmlList = filterData.map((adalaber) => (<tr key={adalaber.id}>
     <td>{adalaber.name}</td>
     <td>{adalaber.counselor}</td>
     <td>{adalaber.speciality}</td>
@@ -55,6 +64,14 @@ function App() {
         <h1>Adalabers</h1>
       </header>
       <main>
+        <label htmlFor="search">Nombre:</label>
+        <input type="text"
+          name="search"
+          id="search"
+          placeholder="Ej.MariCarmen"
+          onChange={handleChangeSearch}
+          value={search}
+        />
         <table>
           <thead><tr>
             <th>Nombre</th>
