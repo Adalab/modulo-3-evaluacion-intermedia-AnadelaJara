@@ -34,6 +34,7 @@ function App() {
       name: name,
       counselor: counselor,
       speciality: speciality,
+      id: data.length,
     }
     setData([...data, newAdalaber]);
     setName('');
