@@ -1,12 +1,22 @@
 import '../styles/App.css';
-import adalabersList from '../data/adalabers.json';
-import { useState } from 'react';
+//import adalabersList from '../data/adalabers.json';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const [data, setData] = useState(adalabersList);
+  //const [data, setData] = useState(adalabersList);
   const [name, setName] = useState('');
   const [counselor, setCounselor] = useState('');
   const [speciality, setSpeciality] = useState('');
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json')
+      .then(response => response.json())
+      .then(responseData => {
+        setData(responseData.results);
+      });
+  }, []);
 
   const handleChangeName = (ev) => {
     setName(ev.currentTarget.value);
@@ -26,6 +36,9 @@ function App() {
       speciality: speciality,
     }
     setData([...data, newAdalaber]);
+    setName('');
+    setCounselor('');
+    setSpeciality('');
   }
 
   const htmlList = data.map((adalaber) => (<tr key={adalaber.id}>
@@ -42,10 +55,9 @@ function App() {
       </header>
       <main>
         <table>
-          {/* <!-- Fila de cabecera --> */}
           <thead><tr>
             <th>Nombre</th>
-            <th>Tutora 2</th>
+            <th>Tutora  </th>
             <th>Especialidad</th>
           </tr></thead>
           <tbody>
