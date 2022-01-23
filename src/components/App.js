@@ -44,11 +44,13 @@ function App() {
       counselor: counselor,
       speciality: speciality,
       id: data.length,
+      social_networks: [{}],
     }
     setData([...data, newAdalaber]);
     setName('');
     setCounselor('');
     setSpeciality('');
+
   }
 
   const htmlList = data
@@ -65,11 +67,19 @@ function App() {
     })
     .filter((adalaber) => adalaber.name.toLowerCase().includes(search.toLowerCase()))
 
-    .map((adalaber) => (<tr key={adalaber.id}>
+    .map((adalaber) => (<tr className="list" key={adalaber.id}>
       <td>{adalaber.name}</td>
       <td>{adalaber.counselor}</td>
       <td>{adalaber.speciality}</td>
-      {/* <td>{adalaber.social_networks.name}</td> */}
+      <td>{<ul>
+        {adalaber.social_networks.map((social, index) => {
+          return (
+            <li key={index}>
+              <a href={social.url}>{social.name}</a>
+            </li>
+          );
+        })}
+      </ul>}</td>
     </tr>)
     );
 
@@ -89,9 +99,9 @@ function App() {
             onChange={handleChangeSearch}
             value={search}
           />
-          <label htmlFor="counselor" className="label">Escoge una tutora:</label>
+          <label htmlFor="counselor" className="label">Tutora:</label>
           <select onChange={handleChangeSelect} value={select} className="select" name="counselor" id="counselor">
-            <option value="all">Escoge una opción</option>
+            <option value="all">Todas</option>
             <option value="yanelis">Yanelis</option>
             <option value="dayana">Dayana</option>
             <option value="ivan">Iván</option>
@@ -99,13 +109,13 @@ function App() {
         </form>
         <table className="table">
           <thead>
-            <tr>
+            <tr className="thread">
               <th>Nombre</th>
               <th>Tutora  </th>
               <th>Especialidad</th>
-              {/* <th>Redes Sociales</th> */}
+              <th>Redes Sociales</th>
             </tr></thead>
-          <tbody>
+          <tbody className="main1__table--body">
             {htmlList}
           </tbody>
         </table>
