@@ -1,9 +1,8 @@
 import '../styles/App.css';
-//import adalabersList from '../data/adalabers.json';
 import { useEffect, useState } from 'react';
+import callToApi from '../services/api';
 
 function App() {
-  //const [data, setData] = useState(adalabersList);
   const [name, setName] = useState('');
   const [counselor, setCounselor] = useState('');
   const [speciality, setSpeciality] = useState('');
@@ -11,10 +10,10 @@ function App() {
   const [data, setData] = useState([]);
 
   const [search, setSearch] = useState('');
+  const [select, setSelect] = useState('all');
 
   useEffect(() => {
-    fetch('https://beta.adalab.es/pw-recursos/apis/adalabers-v1/promo-patata.json')
-      .then(response => response.json())
+    callToApi()
       .then(responseData => {
         setData(responseData.results);
       });
@@ -22,6 +21,10 @@ function App() {
 
   const handleChangeSearch = (ev) => {
     setSearch(ev.currentTarget.value)
+  }
+
+  const handleChangeSelect = (ev) => {
+    setSelect(ev.currentTarget.value);
   }
 
   const handleChangeName = (ev) => {
@@ -48,60 +51,88 @@ function App() {
     setSpeciality('');
   }
 
-  const filterData = data.filter((oneAdalaber) => oneAdalaber.name.toLowerCase().includes(search.toLowerCase()));
+  const htmlList = data
+    .filter((adalaber) => {
+      if (select === 'all') {
+        return adalaber;
+      } else if (select === 'yanelis') {
+        return adalaber.counselor === 'Yanelis';
+      } else if (select === 'dayana') {
+        return adalaber.counselor === 'Dayana';
+      } else if (select === 'ivan') {
+        return adalaber.counselor === 'Iván';
+      }
+    })
+    .filter((adalaber) => adalaber.name.toLowerCase().includes(search.toLowerCase()))
 
-
-  const htmlList = filterData.map((adalaber) => (<tr key={adalaber.id}>
-    <td>{adalaber.name}</td>
-    <td>{adalaber.counselor}</td>
-    <td>{adalaber.speciality}</td>
-  </tr>
-  ));
+    .map((adalaber) => (<tr key={adalaber.id}>
+      <td>{adalaber.name}</td>
+      <td>{adalaber.counselor}</td>
+      <td>{adalaber.speciality}</td>
+      {/* <td>{adalaber.social_networks.name}</td> */}
+    </tr>)
+    );
 
   return (
     <div>
-      <header >
+      <header className="header">
         <h1>Adalabers</h1>
       </header>
-      <main>
-        <label htmlFor="search">Nombre:</label>
-        <input type="text"
-          name="search"
-          id="search"
-          placeholder="Ej.MariCarmen"
-          onChange={handleChangeSearch}
-          value={search}
-        />
-        <table>
-          <thead><tr>
-            <th>Nombre</th>
-            <th>Tutora  </th>
-            <th>Especialidad</th>
-          </tr></thead>
+      <main className="main">
+        <form action="" className="form">
+          <label className="label" htmlFor="search">Nombre:</label>
+          <input className="input"
+            type="text"
+            name="search"
+            id="search"
+            placeholder="Ej. MariCarmen"
+            onChange={handleChangeSearch}
+            value={search}
+          />
+          <label htmlFor="counselor" className="label">Escoge una tutora:</label>
+          <select onChange={handleChangeSelect} value={select} className="select" name="counselor" id="counselor">
+            <option value="all">Escoge una opción</option>
+            <option value="yanelis">Yanelis</option>
+            <option value="dayana">Dayana</option>
+            <option value="ivan">Iván</option>
+          </select>
+        </form>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tutora  </th>
+              <th>Especialidad</th>
+              {/* <th>Redes Sociales</th> */}
+            </tr></thead>
           <tbody>
             {htmlList}
           </tbody>
         </table>
-        <form>
+        <form className="form">
           <h2>Añade una Adalaber</h2>
-          <label htmlFor="name">Nombre:</label>
+          <label htmlFor="name" className="label">Nombre:</label>
           <input
+            className="input"
             type="text"
             name="name"
             id="name"
             onChange={handleChangeName}
             value={name}
           />
-          <label htmlFor="counselor">Tutora:</label>
+          <label htmlFor="counselor" className="label" >Tutora:</label>
           <input
+            className="input"
             type="text"
             name="counselor"
             id="counselor"
             onChange={handleChangeCounselor}
             value={counselor}
           />
-          <label htmlFor="speciality">Especialidad:</label>
+          <label htmlFor="speciality"
+            className="label">Especialidad:</label>
           <input
+            className="input"
             type="text"
             name="speciality"
             id="speciality"
@@ -109,6 +140,7 @@ function App() {
             value={speciality}
           />
           <input
+            className="btn"
             type="submit"
             value="Añadir una nueva Adalaber"
             onClick={handleClick}
