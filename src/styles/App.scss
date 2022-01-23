@@ -5,6 +5,11 @@
   font-family: "Oswald", sans-serif;
 }
 
+header,
+body {
+  background-color: #f0f8ff;
+}
+
 .header {
   margin: 30px;
   font-size: 30px;
@@ -19,6 +24,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &__add {
+    margin-top: 10px;
+  }
 }
 
 .label {
@@ -31,53 +40,39 @@
   height: 30px;
   padding-left: 5px;
   border-radius: 5px;
-  background-color: #f0f8ff;
+  background-color: #ffc0cb;
 }
 
 .select {
   width: 250px;
   height: 30px;
   border-radius: 5px;
-  background-color: #f0f8ff;
+  background-color: #ffc0cb;
 }
 
 .table {
-  width: 100%;
-  border-spacing: 0;
-  border-collapse: separate;
-  margin: 10px 0;
-  margin-bottom: 20px;
   width: 80%;
-}
-thead {
-  background-color: #f0f8ff;
-}
-
-.thread {
+  margin-top: 20px;
   border: 1px solid #000;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
 
-.list {
-  border: 1px solid #000;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
+  &__thead {
+    background-color: #ffc0cb;
 
-th {
-  font-size: 20px;
-  text-align: center;
-  padding: 10px;
-}
+    &--item {
+      font-size: 15px;
+      padding: 5px 0;
+    }
+  }
 
-td {
-  font-size: 15px;
-  font-weight: normal;
+  &__body {
+    &:nth-child(even) {
+      background-color: #d8bfd8;
+    }
+    &--item {
+      width: 25%;
+      padding: 5px 0 5px 10px;
+    }
+  }
 }
 
 .btn {

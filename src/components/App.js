@@ -1,4 +1,4 @@
-import '../styles/App.css';
+import "../styles/App.scss";
 import { useEffect, useState } from 'react';
 import callToApi from '../services/api';
 
@@ -67,11 +67,11 @@ function App() {
     })
     .filter((adalaber) => adalaber.name.toLowerCase().includes(search.toLowerCase()))
 
-    .map((adalaber) => (<tr className="list" key={adalaber.id}>
-      <td>{adalaber.name}</td>
-      <td>{adalaber.counselor}</td>
-      <td>{adalaber.speciality}</td>
-      <td>{<ul>
+    .map((adalaber) => (<tr className="table__body" key={adalaber.id}>
+      <td className="table__body--item">{adalaber.name}</td>
+      <td className="table__body--item">{adalaber.counselor}</td>
+      <td className="table__body--item">{adalaber.speciality}</td>
+      <td className="table__body--item">{<ul>
         {adalaber.social_networks.map((social, index) => {
           return (
             <li key={index}>
@@ -109,18 +109,18 @@ function App() {
         </form>
         <table className="table">
           <thead>
-            <tr className="thread">
-              <th>Nombre</th>
-              <th>Tutora  </th>
-              <th>Especialidad</th>
-              <th>Redes Sociales</th>
+            <tr className="table__thead">
+              <th className="table__thead--item">Nombre</th>
+              <th className="table__thead--item">Tutora  </th>
+              <th className="table__thead--item">Especialidad</th>
+              <th className="table__thead--socialNetwork">Redes Sociales</th>
             </tr></thead>
-          <tbody className="main1__table--body">
+          <tbody>
             {htmlList}
           </tbody>
         </table>
         <form className="form">
-          <h2>Añade una Adalaber</h2>
+          <h2 className="form__add">Añade una Adalaber</h2>
           <label htmlFor="name" className="label">Nombre:</label>
           <input
             className="input"
