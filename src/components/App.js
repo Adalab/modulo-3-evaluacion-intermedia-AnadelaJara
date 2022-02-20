@@ -1,23 +1,25 @@
 import "../styles/App.scss";
-import { useEffect, useState } from 'react';
-import callToApi from '../services/api';
+import { useState } from 'react';
+// import callToApi from '../services/api'; (If api would work)
+import adalabersList from '../data/adalabers.json';
 
 function App() {
   const [name, setName] = useState('');
   const [counselor, setCounselor] = useState('');
   const [speciality, setSpeciality] = useState('');
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(adalabersList);
 
   const [search, setSearch] = useState('');
   const [select, setSelect] = useState('all');
 
-  useEffect(() => {
-    callToApi()
-      .then(responseData => {
-        setData(responseData.results);
-      });
-  }, []);
+  //If api would work:
+  // useEffect(() => {
+  //   callToApi()
+  //     .then(responseData => {
+  //       setData(responseData.results);
+  //     });
+  // }, []);
 
   const handleChangeSearch = (ev) => {
     setSearch(ev.currentTarget.value)
